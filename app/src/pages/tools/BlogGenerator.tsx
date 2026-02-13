@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/ui-custom/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { generateBlog } from '@/lib/aiService';
 import {
   PenTool,
   Wand2,
@@ -53,21 +54,30 @@ export default function BlogGenerator() {
     }
 
     setIsGenerating(true);
+    setGeneratedContent(null);
+    setGeneratedTitles([]);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    try {
+      const result = await generateBlog(topic, selectedTone, contentType);
 
-    if (contentType === 'title') {
-      setGeneratedTitles(sampleTitles.map(title =>
-        title.replace(/2024|Machine Learning|Healthcare|Content Creation/,
-          topic.split(' ').slice(0, 2).join(' '))
-      ));
-    } else {
-      setGeneratedContent(`# ${topic}\n\n## Introduction\n\nIn today's rapidly evolving digital landscape, ${topic.toLowerCase()} has become increasingly important for businesses and individuals alike. This comprehensive guide will explore the key aspects and provide actionable insights.\n\n## Key Points\n\n1. **Understanding the Basics**\n   - Learn the fundamental concepts\n   - Explore real-world applications\n   - Identify common challenges\n\n2. **Best Practices**\n   - Implement proven strategies\n   - Avoid common pitfalls\n   - Optimize for success\n\n3. **Future Trends**\n   - Stay ahead of the curve\n   - Embrace innovation\n   - Prepare for changes\n\n## Conclusion\n\nBy following these guidelines, you'll be well-equipped to leverage ${topic.toLowerCase()} effectively in your projects. Remember, continuous learning and adaptation are key to success.`);
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      if (result.titles && result.titles.length > 0) {
+        setGeneratedTitles(result.titles);
+      } else if (result.content) {
+        setGeneratedContent(result.content);
+      }
+
+      toast.success('Content generated successfully!');
+    } catch (error) {
+      toast.error('Failed to generate content. Please try again.');
+      console.error(error);
+    } finally {
+      setIsGenerating(false);
     }
-
-    setIsGenerating(false);
-    toast.success('Content generated successfully!');
   };
 
   const handleCopy = () => {
@@ -134,8 +144,8 @@ export default function BlogGenerator() {
                         setGeneratedTitles([]);
                       }}
                       className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${contentType === type.id
-                          ? 'bg-purple text-white'
-                          : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                        ? 'bg-purple text-white'
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
                         }`}
                     >
                       {type.name}
@@ -168,8 +178,8 @@ export default function BlogGenerator() {
                       key={tone.id}
                       onClick={() => setSelectedTone(tone.id)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${selectedTone === tone.id
-                          ? 'border-purple bg-purple/20'
-                          : 'border-white/10 bg-white/5 hover:border-white/20'
+                        ? 'border-purple bg-purple/20'
+                        : 'border-white/10 bg-white/5 hover:border-white/20'
                         }`}
                     >
                       <span>{tone.icon}</span>

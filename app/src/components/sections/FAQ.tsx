@@ -5,32 +5,28 @@ import { Plus, Minus, HelpCircle } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'What is QuickAI and how does it work?',
-    answer: 'QuickAI is an all-in-one AI-powered platform that helps you create stunning content, analyze data, and automate workflows. Our advanced AI models can generate images, remove backgrounds, analyze resumes, and create blog content - all from simple text prompts. Simply sign up, choose a tool, and start creating.',
+    question: 'What is QuickAI?',
+    answer: 'QuickAI is a suite of free, powerful AI tools designed to help you create and analyze content. We offer an Image Generator, Background Remover, Resume Analyzer, and Blog Generator - all powered by advanced AI models.',
   },
   {
-    question: 'Is there a free plan available?',
-    answer: 'Yes! We offer a generous free plan that includes 50 AI generations per month, basic image generation, standard resolution outputs, and community support. It is perfect for getting started and exploring our tools before upgrading.',
+    question: 'Is QuickAI properly free?',
+    answer: 'Yes! All our tools are currently free to use. You can generate images, analyze resumes, and create blog posts without any subscription costs or hidden fees.',
   },
   {
-    question: 'How does the image generation work?',
-    answer: 'Our AI image generator uses state-of-the-art diffusion models to create high-quality images from text descriptions. Simply describe what you want to see, choose a style (3D, photorealistic, artistic, etc.), and our AI will generate unique images in seconds. Pro users get access to 4K resolution and advanced customization options.',
+    question: 'Which AI models do you use?',
+    answer: 'We leverage top-tier AI models for our tools. Our Image Generator uses Google\'s Imagen 3 and Flux models, while our text-based tools like the Blog Generator and Resume Analyzer are powered by Google\'s Gemini Pro.',
   },
   {
-    question: 'Can I use the generated content commercially?',
-    answer: 'Absolutely! All content generated on paid plans (Pro and Enterprise) comes with full commercial usage rights. Free plan users can use generated content for personal projects. Enterprise users also get additional licensing protections and custom model training.',
+    question: 'Do I need to create an account?',
+    answer: 'While you can explore some features without an account, signing up (which is also free!) allows you to save your history, access higher limits, and get a more personalized experience.',
   },
   {
-    question: 'What payment methods do you accept?',
-    answer: 'We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for Enterprise plans. All payments are processed securely through Stripe, and we never store your full card details.',
+    question: 'Can I use the generated images for my projects?',
+    answer: 'Yes, the images you generate are yours to use for personal and commercial projects. However, please ensure your usage complies with the terms of the underlying AI models.',
   },
   {
-    question: 'How do I cancel my subscription?',
-    answer: 'You can cancel your subscription at any time from your account settings. Once canceled, you will continue to have access to your paid features until the end of your current billing period. No questions asked, no hidden fees.',
-  },
-  {
-    question: 'Is my data secure?',
-    answer: 'Security is our top priority. All data is encrypted in transit and at rest using industry-standard AES-256 encryption. We are SOC 2 Type II certified and GDPR compliant. Enterprise users get additional security features like SSO, audit logs, and custom data retention policies.',
+    question: 'How accurate is the Resume Analyzer?',
+    answer: 'Our Resume Analyzer uses advanced natural language processing to evaluate your resume against industry standards. It provides actionable feedback on structure, content, and ATS compatibility, helping you stand out to recruiters.',
   },
 ];
 

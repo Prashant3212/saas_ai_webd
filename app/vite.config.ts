@@ -12,4 +12,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      '/hf-api': {
+        // CHANGED: We now point to the new, active Hugging Face router
+        target: 'https://router.huggingface.co/hf-inference',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/hf-api/, '')
+      }
+    }
+  }
 });

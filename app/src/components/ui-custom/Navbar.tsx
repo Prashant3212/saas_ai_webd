@@ -28,8 +28,6 @@ import {
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Features', href: '/#features' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Community', href: '/community' },
 ];
 
 const aiTools = [
@@ -73,18 +71,16 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
             ? 'py-3'
             : 'py-5'
-        }`}
+          }`}
       >
         <div
-          className={`mx-auto transition-all duration-500 ${
-            isScrolled
+          className={`mx-auto transition-all duration-500 ${isScrolled
               ? 'max-w-4xl px-6 py-3 backdrop-blur-xl bg-black/60 border border-white/10 rounded-full mx-4 sm:mx-auto'
               : 'max-w-7xl px-6'
-          }`}
+            }`}
         >
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -104,16 +100,15 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
-                    isActive(link.href)
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${isActive(link.href)
                       ? 'text-white bg-white/10'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              
+
               {/* AI Tools Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -122,8 +117,8 @@ export default function Navbar() {
                     Tools
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent 
-                  align="end" 
+                <DropdownMenuContent
+                  align="end"
                   className="w-56 bg-dark-card border-border-gray backdrop-blur-xl"
                 >
                   {aiTools.map((tool) => (
@@ -173,13 +168,7 @@ export default function Navbar() {
                       <LayoutDashboard className="w-4 h-4" />
                       Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => navigate('/pricing')}
-                      className="flex items-center gap-2 text-gray-300 hover:text-white hover:bg-white/5 cursor-pointer"
-                    >
-                      <CreditCard className="w-4 h-4" />
-                      Upgrade Plan
-                    </DropdownMenuItem>
+
                     <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem
                       onClick={handleLogout}
@@ -234,7 +223,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 md:hidden"
           >
-            <div 
+            <div
               className="absolute inset-0 bg-black/80 backdrop-blur-xl"
               onClick={() => setIsMobileMenuOpen(false)}
             />
@@ -251,16 +240,15 @@ export default function Navbar() {
                     key={link.name}
                     to={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-3 text-lg font-medium rounded-lg transition-colors ${
-                      isActive(link.href)
+                    className={`px-4 py-3 text-lg font-medium rounded-lg transition-colors ${isActive(link.href)
                         ? 'text-white bg-white/10'
                         : 'text-gray-400 hover:text-white hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>
                 ))}
-                
+
                 <div className="border-t border-white/10 my-4" />
                 <p className="px-4 text-sm text-gray-500 font-medium">AI Tools</p>
                 {aiTools.map((tool) => (
@@ -276,7 +264,7 @@ export default function Navbar() {
                 ))}
 
                 <div className="border-t border-white/10 my-4" />
-                
+
                 {isAuthenticated ? (
                   <>
                     <Link

@@ -23,15 +23,16 @@ const styles = [
   { id: 'sketch', name: 'Sketch', icon: '✏️', prompt: 'pencil sketch, black and white, charcoal' },
 ];
 
+import { generateImage } from '../../lib/imageService';
+
 export default function ImageGenerator() {
   const [prompt, setPrompt] = useState('');
   const [selectedStyle, setSelectedStyle] = useState('3d');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const [isPublic, setIsPublic] = useState(false);
   const [imageKey, setImageKey] = useState(0);
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!prompt.trim()) {
       toast.error('Please enter a prompt');
       return;
@@ -40,19 +41,29 @@ export default function ImageGenerator() {
     setIsGenerating(true);
     setGeneratedImage(null);
 
-    const selectedStyleObj = styles.find(s => s.id === selectedStyle);
-    const stylePrompt = selectedStyleObj ? `, ${selectedStyleObj.prompt}` : '';
-    const fullPrompt = prompt.trim() + stylePrompt;
-    const seed = Math.floor(Math.random() * 1000000);
-    const encodedPrompt = encodeURIComponent(fullPrompt);
+    try {
+      const result = await generateImage({
+        prompt: prompt,
+        style: selectedStyle
+      });
 
-    // Using Pollinations.ai for reliable rendering with Flux model
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
-
-    setTimeout(() => {
-      setGeneratedImage(imageUrl);
-      setImageKey(prev => prev + 1);
-    }, 100);
+      if (result.success && result.imageUrl) {
+        setGeneratedImage(result.imageUrl);
+        setImageKey(prev => prev + 1);
+      } else {
+        toast.error(result.error || 'Failed to generate image');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('An unexpected error occurred');
+    } finally {
+      // The image loading state is handled by the <img> onLoad/onError
+      // but we set isGenerating to false here just in case the URL is instant
+      // or if we want to show the loading spinner until the image actually loads.
+      // However, for better UX with external URLs, we might want to keep
+      // isGenerating true until the image loads.
+      // The current implementation sets it to false in handleImageLoad.
+    }
   };
 
   const handleImageLoad = () => {
@@ -60,7 +71,9 @@ export default function ImageGenerator() {
     toast.success('Image generated successfully!');
   };
 
-  const handleImageError = () => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error("Image Load Error:", e);
+    console.log("Failed URL:", generatedImage);
     setIsGenerating(false);
     setGeneratedImage(null);
     toast.error('Failed to load image. Please try again.');
