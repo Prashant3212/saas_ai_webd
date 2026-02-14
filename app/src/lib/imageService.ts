@@ -43,8 +43,20 @@ export async function generateImage(
 
         // Notice we are using our local proxy '/hf-api' instead of the full URL!
         // This completely bypasses the browser's CORS block.
+        // const response = await fetch(
+        //     "/hf-api/models/stabilityai/stable-diffusion-xl-base-1.0",
+        //     {
+        //         headers: {
+        //             "Authorization": `Bearer ${HF_TOKEN}`,
+        //             "Content-Type": "application/json",
+        //         },
+        //         method: "POST",
+        //         body: JSON.stringify({ inputs: enhancedPrompt }),
+        //     }
+        // );
+        // Bypassing the proxy to talk directly to Hugging Face!
         const response = await fetch(
-            "/hf-api/models/stabilityai/stable-diffusion-xl-base-1.0",
+            "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0",
             {
                 headers: {
                     "Authorization": `Bearer ${HF_TOKEN}`,
