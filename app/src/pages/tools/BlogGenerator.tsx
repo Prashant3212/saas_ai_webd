@@ -32,12 +32,7 @@ const contentTypes = [
   { id: 'conclusion', name: 'Conclusion' },
 ];
 
-const sampleTitles = [
-  "10 AI Trends That Will Transform Your Business in 2024",
-  "The Ultimate Guide to Machine Learning for Beginners",
-  "How to Leverage AI for Content Creation",
-  "5 Ways AI is Revolutionizing Healthcare",
-];
+
 
 export default function BlogGenerator() {
   const [topic, setTopic] = useState('');

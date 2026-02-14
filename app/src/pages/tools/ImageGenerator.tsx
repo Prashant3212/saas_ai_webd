@@ -8,9 +8,6 @@ import {
   Download,
   Sparkles,
   RefreshCw,
-  Check,
-  Globe,
-  Lock
 } from 'lucide-react';
 import { toast } from 'sonner';
 
