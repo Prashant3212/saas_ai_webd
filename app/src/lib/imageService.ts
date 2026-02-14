@@ -27,9 +27,9 @@ export async function generateImage(
     options: GenerateImageOptions
 ): Promise<GenerateImageResult> {
     const { prompt, style = '3d' } = options;
-    
+
     // Hardcoded as requested so your .env file stays exactly how you need it!
-    const HF_TOKEN = "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"; 
+    const HF_TOKEN = import.meta.env.VITE_HUGGINGFACE_API_KEY;
 
     if (!prompt.trim()) {
         return { success: false, error: 'Prompt cannot be empty' };
@@ -37,7 +37,7 @@ export async function generateImage(
 
     try {
         console.log("Requesting image via Vite Proxy...");
-        
+
         const styleModifier = STYLE_MODIFIERS[style] || '';
         const enhancedPrompt = `${prompt.trim()}, ${styleModifier}`;
 
@@ -56,18 +56,18 @@ export async function generateImage(
         );
 
         if (!response.ok) {
-             const errorData = await response.json();
-             console.error("Hugging Face API Error:", errorData);
-             
-             // Hugging Face sometimes needs 10-20 seconds to load the free model into memory
-             if (errorData.error && errorData.error.includes("is currently loading")) {
-                 return {
-                     success: false,
-                     error: `The AI is waking up (Wait ${Math.round(errorData.estimated_time || 20)}s). Please click generate again!`,
-                 };
-             }
-             
-             throw new Error(`Status: ${response.status}`);
+            const errorData = await response.json();
+            console.error("Hugging Face API Error:", errorData);
+
+            // Hugging Face sometimes needs 10-20 seconds to load the free model into memory
+            if (errorData.error && errorData.error.includes("is currently loading")) {
+                return {
+                    success: false,
+                    error: `The AI is waking up (Wait ${Math.round(errorData.estimated_time || 20)}s). Please click generate again!`,
+                };
+            }
+
+            throw new Error(`Status: ${response.status}`);
         }
 
         const blob = await response.blob();
@@ -77,7 +77,7 @@ export async function generateImage(
 
         return {
             success: true,
-            imageUrl: localImageUrl, 
+            imageUrl: localImageUrl,
         };
 
     } catch (error) {
